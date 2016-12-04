@@ -4,34 +4,39 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 public class Task2 {
-    public static void main(String[] args)throws IOException
-        {
-            File file = new File("java2.txt");
-            file.createNewFile();
+    public static void main(String[] args) throws IOException {
+        File file = new File("D:/test-java.txt");
+        file.createNewFile();
 
-            FileOutputStream outputStream = new FileOutputStream(file);
-            String s="Welcome to the Candy shop?";
-            outputStream.write(s.getBytes());
-            outputStream.close();
+        FileOutputStream outputStream = new FileOutputStream(file);
+        outputStream.write("Hello, dear student!\nHow are you?".getBytes());
+        outputStream.close();
 
-            TextFileReader textFileReader = new TextFileReader(file);
-            textFileReader.getContentAsString();
+        TextFileReader textFileReader = new TextFileReader(file);
+        System.out.println(textFileReader.getContentAsString());
 
-        }
+        file.delete();
+    }
 }
 
 class TextFileReader {
-    File f;
-    TextFileReader(File o){
-        f=o;
+    File file;
+
+    public TextFileReader(File file){
+        this.file = file;
     }
 
+    public String getContentAsString() throws IOException{
+        FileInputStream inputStream = new FileInputStream(file);
+        Scanner scanner = new Scanner(inputStream);
 
-    public void getContentAsString() throws IOException  {
-        FileInputStream input=new FileInputStream(f);
-        Scanner scn=new Scanner(input);
-        System.out.println(scn.nextLine());
+        String s = "";
+        while (scanner.hasNext()) {
+            s += (scanner.nextLine() + "\n");
+        }
+        inputStream.close();
+
+        return s;
 
     }
-
 }
